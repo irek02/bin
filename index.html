@@ -26,9 +26,19 @@
 </head>
 <body>
     <textarea id="message" name="message"></textarea>
+    <div>
+        <button id="add">+</button>
+    </div>
     <script>
         window.onload = function() {
             document.getElementById("message").focus();
+            document.getElementById("add").onclick = function() {
+                var textarea = document.createElement("textarea");
+                document.body.insertBefore(textarea, document.getElementById("message").nextSibling);
+                textarea.focus();
+                textarea.style.width = "40%";
+                document.getElementById("message").style.width = "40%";
+            };
         };
     </script>
 </body>

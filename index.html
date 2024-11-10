@@ -21,14 +21,20 @@
             border: none;
             outline: none;
         }
+        .hover-element {
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .hover-element:hover {
+            opacity: 1;
+        }
     </style>
-    <title>Bin</title>
+    <title>TabNote.one</title>
 </head>
 <body>
     <textarea id="message" name="message"></textarea>
-    <div>
-        <button id="add">+</button>
-    </div>
+    <button id="add" class="hover-element">+</button>
     <script>
         window.onload = function() {
             document.getElementById("message").focus();

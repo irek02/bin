@@ -34,7 +34,6 @@
 </head>
 <body>
     <textarea id="message" name="message" placeholder="Got a thought? Jot it down here! (P.S. Your notes stay right here in your browser and won’t be sent anywhere)"></textarea>
-    <button id="add" class="hover-element">+</button>
     <script>
         window.onload = function() {
 
@@ -52,13 +51,6 @@
                 sessionStorage.setItem("noteContent", messageTextarea.value);
             });
 
-            document.getElementById("add").onclick = function() {
-                var textarea = document.createElement("textarea");
-                document.body.insertBefore(textarea, document.getElementById("message").nextSibling);
-                textarea.focus();
-                textarea.style.width = "40%";
-                document.getElementById("message").style.width = "40%";
-            };
         };
     </script>
 </body>

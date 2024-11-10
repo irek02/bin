@@ -33,11 +33,25 @@
     <title>TabNote.one</title>
 </head>
 <body>
-    <textarea id="message" name="message"></textarea>
+    <textarea id="message" name="message" placeholder="Got a thought? Jot it down here! (P.S. Your notes stay right here in your browser and won’t be sent anywhere)"></textarea>
     <button id="add" class="hover-element">+</button>
     <script>
         window.onload = function() {
-            document.getElementById("message").focus();
+
+            const messageTextarea = document.getElementById("message");
+
+            // Check if there’s saved content in sessionStorage
+            const savedContent = sessionStorage.getItem("noteContent");
+            if (savedContent) {
+                messageTextarea.value = savedContent;
+            }
+
+            messageTextarea.focus();
+
+            messageTextarea.addEventListener("input", function() {
+                sessionStorage.setItem("noteContent", messageTextarea.value);
+            });
+
             document.getElementById("add").onclick = function() {
                 var textarea = document.createElement("textarea");
                 document.body.insertBefore(textarea, document.getElementById("message").nextSibling);

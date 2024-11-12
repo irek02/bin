@@ -21,7 +21,22 @@
     <title>TabNote.one - Your Private, Temporary Notepad</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
+        /* Default (Light Theme) */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+        }
+
+        /* Dark Theme */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121212;
+                --text-color: #ffffff;
+            }
+        }
         html, body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
             height: 100%;
             width: 100%;
             margin: 0;
@@ -30,6 +45,8 @@
             justify-content: center;
         }
         textarea {
+            background-color: var(--bg-color);
+            color: var(--text-color);
             width: 70%;
             max-width: 100%;
             height: 90%;

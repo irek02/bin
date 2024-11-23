@@ -41,27 +41,30 @@
             width: 100%;
             margin: 0;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
         }
-        textarea {
+        #message {
+            margin: 6vh;
+            font-family: monospace;
             background-color: var(--bg-color);
             color: var(--text-color);
             opacity: 81%;
             width: 70%;
             max-width: 100%;
-            height: 90%;
             box-sizing: border-box;
-            font-size: 16px;
+            font-size: 18px;
             border: none;
             outline: none;
             line-height: 1.5;
+            resize: horizontal;
+            overflow: auto;
         }
     </style>
     <title>TabNote.one</title>
 </head>
 <body>
-    <textarea id="message" name="message" placeholder="Got a thought? Jot it down here! (P.S. Your notes stay right here in your browser and won’t be sent anywhere)"></textarea>
+    <div id="message" contenteditable="true"></div>
     <script>
         window.onload = function() {
 
@@ -70,13 +73,19 @@
             // Check if there’s saved content in sessionStorage
             const savedContent = sessionStorage.getItem("noteContent");
             if (savedContent) {
-                messageTextarea.value = savedContent;
+                messageTextarea.innerHTML = savedContent;
+            } else {
+                messageTextarea.innerHTML = "Got a thought? Jot it down here! (P.S. Your notes stay right here in your browser and won’t be sent anywhere)";
+                setTimeout(() => {
+                    document.execCommand("selectAll", false, null);
+                }, 0);
+
             }
 
             messageTextarea.focus();
 
             messageTextarea.addEventListener("input", function() {
-                sessionStorage.setItem("noteContent", messageTextarea.value);
+                sessionStorage.setItem("noteContent", messageTextarea.innerHTML);
             });
 
         };

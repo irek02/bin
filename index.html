@@ -44,51 +44,78 @@
             align-items: flex-start;
             justify-content: center;
         }
+        #container {
+            position: relative;
+            display: inline-block;
+            width: 70%;
+            max-width: 100%;
+        }
         #message {
             margin: 6vh;
             font-family: monospace;
             background-color: var(--bg-color);
             color: var(--text-color);
             opacity: 81%;
-            width: 70%;
-            max-width: 100%;
             box-sizing: border-box;
             font-size: 18px;
             border: none;
             outline: none;
             line-height: 1.5;
-            resize: horizontal;
             overflow: auto;
         }
-    </style>
-    <title>TabNote.one</title>
+        #resize-handle {
+            width: 5px;
+            height: 100%;
+            margin-top: 8vh;
+            cursor: ew-resize;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: transparent;
+            transition: background-color 0.3s;
+        }
+        #resize-handle:hover {
+            background-color: rgba(135, 206, 235, 0.5); /* Soft blue color */
+        }
+</style>
+<title>TabNote.one</title>
 </head>
 <body>
-    <div id="message" contenteditable="true"></div>
+    <div id="container">
+        <div id="message" contenteditable="true"></div>
+        <div id="resize-handle"></div>
+    </div>
     <script>
         window.onload = function() {
+            const messageDiv = document.getElementById("message");
+            const containerDiv = document.getElementById("container");
+            const resizeHandle = document.getElementById("resize-handle");
 
-            const messageTextarea = document.getElementById("message");
-
-            // Check if there’s saved content in sessionStorage
             const savedContent = sessionStorage.getItem("noteContent");
             if (savedContent) {
-                messageTextarea.innerHTML = savedContent;
+                messageDiv.innerHTML = savedContent;
             } else {
-                messageTextarea.innerHTML = "Got a thought? Jot it down here! (P.S. Your notes stay right here in your browser and won’t be sent anywhere)";
-                setTimeout(() => {
-                    document.execCommand("selectAll", false, null);
-                }, 0);
-
+                messageDiv.innerHTML = "Got a thought? Jot it down here! (P.S. Your notes stay right here in your browser and won’t be sent anywhere)";
             }
 
-            messageTextarea.focus();
-
-            messageTextarea.addEventListener("input", function() {
-                sessionStorage.setItem("noteContent", messageTextarea.innerHTML);
+            resizeHandle.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                document.addEventListener('mousemove', resize);
+                document.addEventListener('mouseup', stopResize);
             });
 
-        };
+            function resize(e) {
+                containerDiv.style.width = e.clientX - containerDiv.offsetLeft + 'px';
+                resizeHandle.style.backgroundColor = 'rgba(135, 206, 235, 0.5)';
+            }
+
+            function stopResize() {
+                document.removeEventListener('mousemove', resize);
+                document.removeEventListener('mouseup', stopResize);
+                resizeHandle.style.backgroundColor = '';
+            }
+        }
     </script>
 </body>
 </html>

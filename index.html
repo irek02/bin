@@ -97,7 +97,12 @@
                 messageDiv.innerHTML = savedContent;
             } else {
                 messageDiv.innerHTML = "Got a thought? Jot it down here! (P.S. Your notes stay right here in your browser and won’t be sent anywhere)";
+                setTimeout(() => {
+                    document.execCommand('selectAll', false, null);
+                }, 0);
             }
+
+            messageDiv.focus();
 
             resizeHandle.addEventListener('mousedown', function(e) {
                 e.preventDefault();
